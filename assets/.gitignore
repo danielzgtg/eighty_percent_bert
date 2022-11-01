@@ -1,0 +1,10 @@
+# Due to copyright reasons, you must manually create the asset files from
+# https://www.sinosplice.com/life/archives/2016/08/25/what-80-comprehension-feels-like
+# For the _mask files, replace the nonsense words with [MASK]
+# For the _completed files, run it through ./bert.py and take the most probable answers
+# Make sure the quotes are NOT escaped
+/help_completed.txt
+/help_mask.txt
+/shower_mask.txt
+/tokyo_completed.txt
+/tokyo_mask.txt

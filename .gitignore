@@ -1,0 +1,8 @@
+/venv
+/.idea
+/__pycache__
+# Group work I don't have permission for:
+/brainstorming_transcript_input_to_clustering.csv
+/brainstorming.svg
+/tutorial5_cluster.csv
+/tutorial5.svg
