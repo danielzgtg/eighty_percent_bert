@@ -16,7 +16,8 @@ TOKENIZER = AutoTokenizer.from_pretrained(MODEL_NAME, model_max_length=40)
 MODEL = AutoModel.from_pretrained(MODEL_NAME)
 
 
-def _load(input_path: str) -> list[str]:
+def _load(input_path: str) -> list[list[str]]:
+    results: list[list[str]] = []
     result: list[str] = []
     import csv
     with open(input_path) as f:
@@ -24,15 +25,23 @@ def _load(input_path: str) -> list[str]:
         next(reader)
         for row in reader:
             result.append(row[2])
-    return result
+            if len(result) == 50:
+                results.append(result)
+                result = []
+    if result:
+        results.append(result)
+    return results
 
 
-def _embed(ideas: list[str]) -> list[np.ndarray]:
+def _embed(ideas: list[list[str]]) -> list[np.ndarray]:
     result: list[np.ndarray] = []
-    for idea in ideas:
+    batches: int = len(ideas)
+    for i, idea in enumerate(ideas):
         tokens = TOKENIZER(idea, padding=True, truncation=True, return_tensors="pt")
         outputs = MODEL(**tokens)
-        result.append(outputs.pooler_output[0].cpu().detach().numpy())
+        features = outputs.pooler_output.cpu().detach().numpy()
+        result.extend(features[i] for i in range(len(features)))
+        print(f"Batch {i}/{batches}")
     return result
 
 
@@ -42,8 +51,9 @@ def _cluster(features: list[np.ndarray]) -> tuple[np.ndarray, np.ndarray]:
     return ward.children_, ward.distances_
 
 
-def _present(children: np.ndarray, distances: np.ndarray, labels, output_path: str) -> None:
+def _present(children: np.ndarray, distances: np.ndarray, labels: list[str], output_path: str) -> None:
     linkage_matrix = np.column_stack([children, distances, np.zeros(children.shape[0])]).astype(float)
+    # noinspection PyTypeChecker
     dendrogram(linkage_matrix, orientation="left", labels=labels)
     plt.gcf().set_size_inches(20, 50)
     plt.subplots_adjust(top=1, bottom=0, left=0, right=0.5)
@@ -51,10 +61,11 @@ def _present(children: np.ndarray, distances: np.ndarray, labels, output_path: s
 
 
 def idea_cluster(input_path: str, output_path: str) -> None:
-    ideas: list[str] = _load(input_path)
+    ideas: list[list[str]] = _load(input_path)
     embeddings: list[np.ndarray] = _embed(ideas)
     children, distances = _cluster(embeddings)
-    _present(children, distances, ideas, output_path)
+    ideas_flat: list[str] = [y for x in ideas for y in x]
+    _present(children, distances, ideas_flat, output_path)
 
 
 def main():
