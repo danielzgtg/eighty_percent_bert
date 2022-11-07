@@ -15,6 +15,9 @@ if True:
     AutoTokenizer = transformers.AutoTokenizer
     transformers.set_seed(42)  # Needed for GPT2 but doesn't work :(
     transformers.logging.set_verbosity_error()
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
 
 
 def load_asset(name: str) -> str:
