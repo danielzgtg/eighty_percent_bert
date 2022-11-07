@@ -3,9 +3,8 @@
 import numpy as np
 from sklearn.cluster import AgglomerativeClustering
 
-from matplotlib import pyplot as plt
 from scipy.cluster.hierarchy import dendrogram
-from my_transformers import AutoModel, AutoTokenizer
+from my_transformers import AutoModel, AutoTokenizer, plt
 
 
 __all__ = ["idea_cluster"]
@@ -52,7 +51,19 @@ def _present(children: np.ndarray, distances: np.ndarray, labels, output_path: s
 
 
 def idea_cluster(input_path: str, output_path: str) -> None:
-    ideas: list[str] = _load()
+    ideas: list[str] = _load(input_path)
     embeddings: list[np.ndarray] = _embed(ideas)
     children, distances = _cluster(embeddings)
     _present(children, distances, ideas, output_path)
+
+
+def main():
+    import sys
+    if len(sys.argv) != 3:
+        print("Usage: ./idea_cluster.py ./transcript.csv output.svg")
+        exit(1)
+    idea_cluster(sys.argv[1], sys.argv[2])
+
+
+if __name__ == '__main__':
+    main()
