@@ -55,7 +55,7 @@ def _present(children: np.ndarray, distances: np.ndarray, labels: list[str], out
     linkage_matrix = np.column_stack([children, distances, np.zeros(children.shape[0])]).astype(float)
     # noinspection PyTypeChecker
     dendrogram(linkage_matrix, orientation="left", labels=labels)
-    plt.gcf().set_size_inches(20, 50)
+    plt.gcf().set_size_inches(20, len(labels) / 10)
     plt.subplots_adjust(top=1, bottom=0, left=0, right=0.5)
     plt.savefig(output_path)
 
