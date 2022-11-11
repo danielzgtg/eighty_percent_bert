@@ -18,6 +18,8 @@ if True:
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
+    # TODO force offline once https://github.com/UKPLab/sentence-transformers/issues/1725 is implemented upstream
+    from keybert import KeyBERT
 
 
 def load_asset(name: str) -> str:
