@@ -20,6 +20,8 @@ if True:
     import matplotlib.pyplot as plt
     import torch
     gpu_device = 0 if torch.cuda.is_available() else -1
+    # TODO force offline once https://github.com/UKPLab/sentence-transformers/issues/1725 is implemented upstream
+    from keybert import KeyBERT
 
 
 def load_asset(name: str) -> str:
