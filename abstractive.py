@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from my_transformers import load_asset, pipeline
+from my_transformers import gpu_device, load_asset, pipeline
 import json
 
 
@@ -13,7 +13,7 @@ def main() -> None:
     # from transformers import T5ForConditionalGeneration, T5Tokenizer
     # model = T5ForConditionalGeneration.from_pretrained('t5-small')
     # tokenizer = T5Tokenizer.from_pretrained('t5-small')
-    summarizer = pipeline("summarization", model="t5-large")
+    summarizer = pipeline("summarization", model="t5-large", device=gpu_device)
     for DATA in DATUMS:
         # tokens = tokenizer.encode("summarize: " + DATA, return_tensors="pt")
         # summary = model.generate(tokens,

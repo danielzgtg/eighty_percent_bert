@@ -1,6 +1,7 @@
 #!/bin/bash
 # no set -e
 . venv/bin/activate
+./abstractive.py
 ./bart.py
 ./bert.py
 ./conversation.py
