@@ -1,8 +1,8 @@
 if True:
     import os
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-    #os.environ['HF_DATASETS_OFFLINE'] = '1'
-    #os.environ['TRANSFORMERS_OFFLINE'] = '1'
+    os.environ['HF_DATASETS_OFFLINE'] = '1'
+    os.environ['TRANSFORMERS_OFFLINE'] = '1'
     import warnings
     warnings.filterwarnings('ignore')
     import transformers
