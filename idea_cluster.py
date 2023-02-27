@@ -13,7 +13,7 @@ __all__ = ["idea_cluster"]
 plt.rcParams['svg.fonttype'] = 'none'
 MODEL_NAME = "bert-base-uncased"
 TOKENIZER = AutoTokenizer.from_pretrained(MODEL_NAME, model_max_length=40)
-MODEL = AutoModel.from_pretrained(MODEL_NAME)
+MODEL = AutoModel.from_pretrained(MODEL_NAME).to("cuda:0")
 
 
 def _load(input_path: str) -> list[list[str]]:
@@ -37,7 +37,7 @@ def _embed(ideas: list[list[str]]) -> list[np.ndarray]:
     result: list[np.ndarray] = []
     batches: int = len(ideas)
     for i, idea in enumerate(ideas):
-        tokens = TOKENIZER(idea, padding=True, truncation=True, return_tensors="pt")
+        tokens = TOKENIZER(idea, padding=True, truncation=True, return_tensors="pt").to("cuda:0")
         outputs = MODEL(**tokens)
         features = outputs.pooler_output.cpu().detach().numpy()
         result.extend(features[i] for i in range(len(features)))

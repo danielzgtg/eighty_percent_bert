@@ -12,7 +12,7 @@ DATUMS = [
 
 
 def main() -> None:
-    generator = pipeline('text-generation', model='gpt2')
+    generator = pipeline('text-generation', model='gpt2', device=0)
     for DATA in DATUMS:
         for output in generator(DATA, max_length=1000, num_return_sequences=5):
             print(json.dumps(output["generated_text"]))
