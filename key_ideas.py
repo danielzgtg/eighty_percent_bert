@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from my_transformers import KeyBERT
+from my_transformers import KeyBERT, to_gpu, SentenceTransformer
 
 
 def _load(input_path: str) -> list[str]:
@@ -25,7 +25,7 @@ def _load(input_path: str) -> list[str]:
 
 
 def _summarize(ideas: list[str]) -> None:
-    kw_model = KeyBERT()
+    kw_model = KeyBERT(to_gpu(SentenceTransformer("all-MiniLM-L6-v2")))
     for interview in ideas:
         keywords = kw_model.extract_keywords(interview)
         print(keywords)

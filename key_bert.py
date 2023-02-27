@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from my_transformers import KeyBERT
+from my_transformers import KeyBERT, to_gpu, SentenceTransformer
 
 
 DATUMS = [
@@ -20,7 +20,7 @@ the learning algorithm to generalize from the training data to unseen situations
 
 
 def main() -> None:
-    kw_model = KeyBERT()
+    kw_model = KeyBERT(to_gpu(SentenceTransformer("all-MiniLM-L6-v2")))
     for DATA in DATUMS:
         keywords = kw_model.extract_keywords(DATA)
         print(keywords)
