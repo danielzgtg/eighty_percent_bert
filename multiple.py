@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from my_transformers import pipeline
+from my_transformers import gpu_device, load_asset, pipeline
 
 DATUMS = [
     (load_asset("tokyo_mask")[:115] + load_asset("tokyo_completed")[107:], ["happy", "alone", "bored"]),
@@ -16,7 +16,7 @@ DATUMS = [
 
 
 def main() -> None:
-    unmasker = pipeline('fill-mask', model='bert-base-uncased')
+    unmasker = pipeline('fill-mask', model='bert-base-uncased', device=gpu_device)
     for DATA in DATUMS:
         # print(json.dumps(unmasker(DATA), indent=4))
         print(DATA[0])

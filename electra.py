@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from my_transformers import load_asset, pipeline
+from my_transformers import gpu_device, load_asset, pipeline
 import json
 
 
@@ -12,7 +12,7 @@ DATUMS = [
 
 
 def main() -> None:
-    classifier = pipeline("token-classification", model="dbmdz/electra-large-discriminator-finetuned-conll03-english")
+    classifier = pipeline("token-classification", model="dbmdz/electra-large-discriminator-finetuned-conll03-english", device=gpu_device)
     for DATA in DATUMS:
         print(json.dumps(classifier(DATA), indent=4, default=lambda x: str(x)))
 

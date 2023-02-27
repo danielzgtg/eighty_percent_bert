@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from my_transformers import pipeline, Conversation
+from my_transformers import gpu_device, pipeline, Conversation
 
 
 DATUMS = [
@@ -11,7 +11,7 @@ DATUMS = [
 
 
 def main() -> None:
-    interlocutor = pipeline('conversational', model='microsoft/DialoGPT-medium', max_length=4096)
+    interlocutor = pipeline('conversational', model='microsoft/DialoGPT-medium', max_length=4096, device=gpu_device)
     conversation = Conversation()
     for DATA in DATUMS:
         conversation.add_user_input(DATA)

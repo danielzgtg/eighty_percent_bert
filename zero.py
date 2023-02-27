@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-from my_transformers import load_asset, pipeline
+from my_transformers import gpu_device, load_asset, pipeline
 
 
 DATUMS = [
     # "Hello, I'm a language model,",
-    load_asset("tokyo_complete")
+    load_asset("tokyo_completed")
 ]
 # These candidates are categories from Wikipedia
 CANDIDATES = [
@@ -21,7 +21,7 @@ CANDIDATES = [
 
 
 def main() -> None:
-    classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli")
+    classifier = pipeline("zero-shot-classification", model="facebook/bart-large-mnli", device=gpu_device)
     for DATA in DATUMS:
         result = classifier(DATA, CANDIDATES)
         print(result["sequence"])

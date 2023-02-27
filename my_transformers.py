@@ -1,8 +1,8 @@
 if True:
     import os
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-    os.environ['HF_DATASETS_OFFLINE'] = '1'
-    os.environ['TRANSFORMERS_OFFLINE'] = '1'
+    #os.environ['HF_DATASETS_OFFLINE'] = '1'
+    #os.environ['TRANSFORMERS_OFFLINE'] = '1'
     import warnings
     warnings.filterwarnings('ignore')
     import transformers
@@ -18,6 +18,8 @@ if True:
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
+    import torch
+    gpu_device = 0 if torch.cuda.is_available() else -1
 
 
 def load_asset(name: str) -> str:
@@ -27,3 +29,9 @@ def load_asset(name: str) -> str:
     if '\n' in result:
         raise ValueError
     return result
+
+
+def to_gpu(model):
+    if gpu_device == 0:
+        return model.to("cuda:0")
+    return model

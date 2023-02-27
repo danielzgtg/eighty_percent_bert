@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from my_transformers import pipeline
+from my_transformers import gpu_device, pipeline
 import json
 
 
@@ -22,7 +22,7 @@ DATUMS = [
 
 
 def main() -> None:
-    answerer = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
+    answerer = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad", device=gpu_device)
     for DATA in DATUMS:
         # noinspection PyArgumentList
         print(json.dumps(answerer(question=DATA[1], context=DATA[0])))

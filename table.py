@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from my_transformers import pipeline
+from my_transformers import gpu_device, pipeline
 
 
 DATUMS = [
@@ -14,7 +14,7 @@ DATUMS = [
 
 
 def main() -> None:
-    answerer = pipeline("table-question-answering", model="google/tapas-base-finetuned-wtq")
+    answerer = pipeline("table-question-answering", model="google/tapas-base-finetuned-wtq", device=gpu_device)
     for DATA in DATUMS:
         output = answerer(DATA[0], DATA[1])
         for coords, cell in zip(output["coordinates"], output["cells"]):
