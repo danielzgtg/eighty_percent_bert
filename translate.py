@@ -9,10 +9,11 @@ DATUMS = [
 
 
 def main() -> None:
-    target_lang = "ja_XX"
     model_name = "facebook/mbart-large-50-one-to-many-mmt"
     model = to_gpu(MBartForConditionalGeneration.from_pretrained(model_name))
-    tokenizer = MBart50TokenizerFast.from_pretrained(model_name, src_lang="en_XX")
+    tokenizer = MBart50TokenizerFast.from_pretrained(model_name)
+    tokenizer.src_lang = "en_XX"
+    target_lang = "ja_XX"
     for DATA in DATUMS:
         inputs = to_gpu(tokenizer(DATA, return_tensors="pt"))
         # print(len(inputs.input_ids[0]))
