@@ -11,6 +11,8 @@ if True:
     MBartForConditionalGeneration = transformers.MBartForConditionalGeneration
     MBart50TokenizerFast = transformers.MBart50TokenizerFast
     AutoModel = transformers.AutoModel
+    AutoModelForCausalLM = transformers.AutoModelForCausalLM
+    AutoModelForSeq2SeqLM = transformers.AutoModelForSeq2SeqLM
     AutoConfig = transformers.AutoConfig
     AutoTokenizer = transformers.AutoTokenizer
     transformers.set_seed(42)  # Needed for GPT2 but doesn't work :(
